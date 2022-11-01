@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+  <title>Trinka Study</title>
+  <script src="jspsych-6.1.0/jspsych.js"></script>
+  <script src="jspsych-6.1.0/plugins//jspsych-fullscreen.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-survey-html-form.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-survey-likert.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-csv.js"></script>
+  <script src="jspsych-6.1.0/bowser.js"></script>
+  <script src='scripts_jscssphp/functs_experiment.js'></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+   <script src="jsPsych/plugins/jspsych-survey-multi-choice.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-slider-response.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
+  <script src = "jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+  <script src="js/info.js"></script>
+  <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  <style>
+    img {
+      width: 300px;
+    }
+    #display_stage {
+       position: relative;
+       left: 0vw;
+       top: 0vh;
+       height: 100vh;
+       width: 100vw;
+       background-color: #f8f4ff;
+       box-shadow: 1px 1px 1px #999;
+       border-radius: 2px;
+       z-index: 0;
+       overflow-y: hidden;
+       overflow-x: hidden;
+   }
+   
+	span.emoji {
+	  font-size: 30px;
+	  vertical-align: middle;
+	  line-height: 2;
+	}
+  </style>
+  <div id='display_stage'></div>
+</head>
+<body></body>
+<script>
+
+
+	//Failsafe: to avoid filename overwrite if subject refreshes the screen
+  failsafe = Math.round(Math.random()*(99-10)+10);
+  //https://jsbin.com/wivanojuqo/edit?html,console,output
+  //https://www.toptal.com/developers/keycode/for/z
+    $(window).keypress(function(event) {
+      if (event.keyCode === 122)
+        $("#z_butt").click();
+      else if (event.keyCode === 109)
+        $('#m_butt').click();
+    });
+
+  //https://www.codegrepper.com/code-examples/javascript/how+to+generate+random+id+in+javascript
+  //var a = jsPsych.data.get().values()[0].cbOrder;
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const pid_pass = urlParams.get('part_id');
+
+	var save_script = "scripts_jscssphp/save2_jquery.php";
+	var backup_script = "scripts_jscssphp/save1_xmlhttp.php";
+	var main_trial_info = trial_info_v1;
+    console.log(main_trial_info);
+
+  var fullscreen_trial = {
+    type: 'fullscreen',
+    message: "<p> This task will switch to full screen mode when you press the button below </p>",
+    fullscreen_mode: true,
+  };
+  jsPsych.data.addProperties({ // add these variables to all rows of the datafile
+
+      browser_name: bowser.name, browser_version: bowser.version,
+
+      os_name: bowser.osname, os_version: bowser.osversion,
+
+   // convert explicitly to string so that "undefined" (no response) does not lead to empty cells in the datafile
+      screen_resolution: screen.width + ' x ' + screen.height,
+
+      window_resolution: window.innerWidth + ' x ' + window.innerHeight, // this will be updated throughout the experiment
+      window_width: window.innerWidth,
+      window_height:window.innerHeight,
+    });
+  //console.log(screen.heigh  "screen height");
+  var h = screen.height;
+  var w = screen.width;
+  var scale_w = w- 100;
+  console.log(scale_w);
+  var post = scale_w-800;
+  console.log(post);
+  var timeline = [];
+  var welcome = {
+    type: "survey-html-form",
+    preamble: "<p> Welcome to the experiment, Please enter your name!</p>",
+    html: "<p> Name: <input name = 'Part_ID' type: 'text'/></p>",
+    choices: ["Click here to continue"],
+    on_finish: function (data){
+      data.responses = JSON.parse(data.responses);
+      jsPsych.data.addProperties({
+        Part_ID: data.responses.Part_ID,
+      })
+    }
+  };
+  var instructions = {
+            type: 'instructions',
+             pages: ["<h1 style = 'color: black;'> Instructions</h1><br>"+
+				'<div style="text-align:left;"><p> In the following task, you will be presented with two sentences an <strong>Original Sentence</strong> and a <strong>Suggested Sentence</strong> as demonstrated below:</p>'+
+				'<p style="text-align:justify;"><b>Original Sentence</b>: She will be given a gift she chooses.<br><b>Suggested Sentence</b>: She will be given a gift of her choice.</p>'+
+				'<p style="text-align:justify;">Imagine there’s an <b>AI-assisted tool</b> that generates the <b>Suggested sentence</b> after revising <b>Original sentence.</b></p>'+
+				'<p style="text-align:justify;"> Now, you will be responding with how you <b>feel</b> about the <b>Suggested sentence</b> from the following options :</p> <p style="text-align:justify;"><b><span class="emoji" >&#128534</span>&nbsp;Irritated, <span class="emoji" >&#128530</span>&nbsp;Dissatisfied, <span class="emoji" >&#128512</span>&nbsp;Satisfied </b>and <b><span class="emoji" >&#129321</span>&nbsp;Delighted.</b></p>'+
+				'<p style="text-align:justify;">Please choose the option that <b>best describes your feelings</b> about the Suggested sentence.</p></div>'],
+            show_clickable_nav: true
+        };
+  var fixation = {
+            type: 'html-keyboard-response',
+            stimulus: '<span style="font-size:40px;">+</span>',
+            choices: jsPsych.NO_KEYS,
+            trial_duration: 1000
+        };
+        
+
+  var fullscreen_trial_exit = {
+    type: 'fullscreen',
+    fullscreen_mode: false
+  };
+ var end = {
+     type: 'html-button-response',
+     stimulus:[ 
+     '<p> Thank you for your participation. </p> '
+	 ],
+     choices: ["END"],
+   };
+  var trial1 ={
+	type: 'html-slider-response',
+    stimulus: function() {
+		//return '<span style="font-size:20px;" >' + jsPsych.timelineVariable('probe', true) + '</span>'+
+		//'<br><br><span style="font-size:20px;">' + jsPsych.timelineVariable('probe1', true) + '</span>'+
+		//'<br><br><span style="font-size:20px;">I feel:</span>';
+		return '<div style ="font-size:20px; position:relative; top: 35%; margin-right:auto">'+ jsPsych.timelineVariable('probe', true) +'</div>'+
+		'<br><div style ="font-size:20px; position:relative; top: 40%; margin-right:auto"><i><b>'+ jsPsych.timelineVariable('probe1', true) +'</i></b></div><br>'
+	},
+	slider_width: 500,
+	data: {
+		probe: jsPsych.timelineVariable('probe'),
+		probe1:jsPsych.timelineVariable('probe1'),
+		complexity: jsPsych.timelineVariable('complexity')
+	},
+	require_movement: true,
+    labels: ['','<span class="emoji" >&#128534</span><br> Irritated' ,'<span class="emoji" >&#128530</span><br> Dissatisfied','<span class="emoji" >&#128512</span><br> Satisfied', '<span class="emoji" >&#129321</span><br> Delighted<br><br>']
+  
+  }
+  
+  
+//var trial_info = [
+ //     {stimulus:'<div style="width:500px;">'+
+ //         '<p>S1: The paper and pencil sit idle in the desk.</p>'+
+ //         '<p>S2: The paper and pencil sat idle on the desk.</p>'+
+ //         '</div>'},
+//		condition: "high"
+                
+//         ];
+     
+     var sentence_rating_procedure = {
+                 timeline: [trial1],
+                 timeline_variables: main_trial_info,
+                 randomize_order: true
+             }
+			 
+	var end_screen2 = {
+    type: 'html-button-response',
+    stimulus:'<p style = "text-align: center;">Great, you have completed all the tasks.</p>'+'<p style = "text-align: center;">We appreciate the time and effort you devoted to these tasks.</p>'+
+	'<br><p>Press <b>End</b> to exit </p>',
+    choices:['End'],
+    on_load: function(){
+      var file_name_server = pid_pass + '_post_data'+failsafe;
+      var file_name_local = pid_pass + '_post_local-data'+failsafe+'.csv';
+      var file_name_other = pid_pass + '_post_backup'+failsafe; //using jQuery function
+      save_data_json(file_name_server,"data_sentence",jsPsych.data.get().json()); // on server in subjects_data folder (JSON)
+      save_data_csv(file_name_server,"data_sentence",jsPsych.data.get().csv());  // on server in subjects_data folder (CSV)
+      saveData(file_name_other+'.csv', 'data_backup', jsPsych.data.get().csv());  // on server in subjects_data folder as backup script
+    }
+  }
+
+  jsPsych.init({
+    timeline: [ instructions, fullscreen_trial,sentence_rating_procedure, end_screen2, fullscreen_trial_exit],
+      display_element: 'display_stage',
+    on_finish: function() {
+      jsPsych.data.displayData();
+      var id = jsPsych.data.get().last(1).values()[0].Part_ID;
+      //jsPsych.data.get.localSave('csv', id  +'.csv')
+      jsPsych.data.get().localSave('csv','mydata.csv');
+      saveData(id, selected_data.csv());
+	  //alert("Thanks! You can now close the window.");
+    }
+  });
+  
+ 
+</script>
+
+</html>

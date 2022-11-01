@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Trinka_study</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="scripts_jscssphp/main.css">
+	</head>
+	<script type="text/javascript">
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const device_type = urlParams.get('device'); //var1
+		//console.log(device_type);
+	</script>
+	<script src="scripts_jscssphp/lib_platform-1.3.5.js"></script>
+	<script src="scripts_jscssphp/lib_device-uuid-1.0.1.js"></script>
+	<script src="scripts_jscssphp/lib_custom_device.js"></script>
+	<script src="scripts_jscssphp/functs_profile.js"></script>
+
+	<style> 
+		label { font-weight: bold; font-size: 14px;} 
+		#slider_val { font-weight: bold; font-size: 18px; color: blue;}
+		.ticks { display: flex; width: 79%;}
+		.o_txt { flex: 1;}
+		.center {
+		margin: auto;
+		width: 60%;
+		padding: 10px;
+		}
+	</style>
+
+	<body style="background-color:#f8f4ff;">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md" style="text-align: center;">
+		<a class="navbar-brand text-wrap"><strong>Team Trinka</strong></a>
+		</nav>
+		
+		<div class="center offset-md-2"> <br>
+			
+			<div class="center" style = "font-size:17px">
+				<h2 style="color:black;">Hello!</h2>
+				<p style ="text-align: justify;"><p>Thank you so much for volunteering for this study.</p><p style ="text-align: justify;">We are a part of the <strong>Trinka.ai  </strong>User Research team and we need your help with enhancing the experience of our product.</p> <p style ="text-align: justify;">As a part of this study, we will be asking you a few questions in the following screen.</p><p style ="text-align: justify;">Once you fill in the answers, you will be asked to perform two very simple tasks:
+				<br>1. Task 1<br>2. Task 2</p></p>
+				<p style ="text-align: justify;"> The instructions for these tasks will be provided at the start of each of the tasks.The entire process will take about 20-25 minutes of your time.</p><p style ="text-align: justify;"><i>Kindly share this with anyone else who may be interested in participating!</i> </p> <p style ="text-align: center;"> Click on <strong>Continue </strong>to proceed.</p>
+			</div>
+		</div>
+
+			<div class="col-sm-3 offset-sm-8">
+				<p> 
+					<center><a href="profile - F.html" class="btn btn-success btn-block" id="continue-button">Continue</a></center>
+				</p> <br><br>
+			</div>
+
+		
+	</body>
+</html>
+

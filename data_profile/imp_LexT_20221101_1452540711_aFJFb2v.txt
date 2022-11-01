@@ -1,0 +1,26 @@
+PartID,LexT_20221101_1452540711_aFJFb2v
+age,24
+gender,f
+country,Bhilwara
+ Rajasthan
+education,Master
+P_status,UX Researcher
+discipline,Cognitive Science
+publications,less than or equal to 10
+firstLang,Hindi
+otherLang,English
+rateEnglish,8
+rateSpeak,7
+rateUnd,8
+rateRead,8
+rateWrite,7
+age_start_speaking_english,0 to 1.5 years
+experienceEnglish,20 to 25
+FormalEduEng,English
+PrimEduEng,English
+SecEduEng,English
+HighEduEng,English
+UniEduEng_Uni,English
+readhrsPerDay,1 to 5
+writehrsPerDay,1 to 5
+speakhrsPerDay,1 to 5
